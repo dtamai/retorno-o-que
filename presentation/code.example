@@ -1,0 +1,34 @@
+// Import React
+import React from 'react';
+
+// Import Spectacle Core tags
+import {
+  BlockQuote,
+  Cite,
+  Deck,
+  Heading,
+  Image,
+  List,
+  ListItem,
+  Notes,
+  Quote,
+  Slide,
+  Text
+} from 'spectacle';
+
+// Import theme
+import createTheme from 'spectacle/lib/themes/default';
+
+import CodeSlide from 'spectacle-code-slide';
+
+const images = {
+};
+
+// Require CSS
+require('normalize.css');
+
+function works() {
+  const yes = false;
+
+  return yes;
+}

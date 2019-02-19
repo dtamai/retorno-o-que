@@ -1,0 +1,16 @@
+post(content) {
+  model = validate(content) || throw Error
+
+  try {
+    published = publish_or_schedule(model)
+    if published == 1 {
+      return model.url
+    } else if published == 2 {
+      return new UrlAndDate(model.url, date)
+    } else {
+      return false
+    }
+  } catch {
+    return -1
+  }
+}

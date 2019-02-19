@@ -1,0 +1,5 @@
+post(content) {
+  model = validate(content)
+
+  return publish_or_schedule(model)
+}
