@@ -1,0 +1,74 @@
+using System;
+
+public class Program
+{
+  public static void Main()
+  {
+    new PostHandler(new Scheduler()).Execute("");
+  }
+}
+
+class ValidationException : Exception {}
+
+class PostHandler
+{
+  Scheduler scheduler;
+
+  public PostHandler(Scheduler scheduler)
+  {
+    this.scheduler = scheduler;
+  }
+
+  public void Execute(String content)
+  {
+    var model = new Model(content);
+    model.Validate();
+
+    this.scheduler.PublishOrSchedule(model);
+
+    if (null != model.ScheduledAt) {
+      Console.WriteLine("Published: {0}", model.Url);
+    } else {
+      Console.WriteLine("Scheduled: {0) at {1:dd/MM}", model.Url, model.ScheduledAt);
+    }
+  }
+}
+
+class Model
+{
+  String content;
+
+  public DateTime ScheduledAt { get; set; }
+  public String Url { get; set; }
+
+  public Model(String content)
+  {
+    this.content = content;
+  }
+
+  public void Validate()
+  {
+    if (!SomeMagic())
+      throw new ValidationException();
+  }
+
+  public bool SomeMagic()
+  {
+    return true;
+  }
+
+  public String GetSlug()
+  {
+    return "";
+  }
+}
+
+class Scheduler
+{
+  public void PublishOrSchedule(Model model)
+  {
+    // ...
+    model.ScheduledAt = new DateTime();
+    model.Url = String.Format("https://www.example.com/{0}", model.GetSlug());
+  }
+}

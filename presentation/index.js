@@ -196,28 +196,57 @@ export default class Presentation extends React.Component {
             <ListItem>pouco controle sobre erros</ListItem>
           </List>
         </Slide>
-        <Slide bgColor="bgColor">
-          <Heading size={3} caps>C-like</Heading>
-          <List>
-            <ListItem>código de retorno</ListItem>
-            <ListItem>retorno de função</ListItem>
-            <ListItem>mutação por ponteiros</ListItem>
-          </List>
-        </Slide>
+        <CodeSlide
+          lang="csharp"
+          code={require('raw-loader!./04_csharp.example')}
+          ranges={[
+            {
+              loc: [2, 20],
+              title: 'C#'
+            },
+            {
+              loc: [4, 8],
+              note: 'O processo completo. Com classes dá pra encapsular melhor'
+            },
+            {
+              loc: [16, 20],
+              note: 'Essa é a classe'
+            },
+            {
+              loc: [21, 33],
+              note: 'E aqui é onde o processo realmente acontece'
+            },
+            {
+              loc: [23, 25],
+              note: 'Validação não tem retorno agora'
+            },
+            {
+              loc: [28, 33],
+              note: 'E uma checagem de nulo pra descobrir se foi agendado'
+            },
+            {
+              loc: [40, 47],
+              note: 'O model é bem simples'
+            },
+            {
+              loc: [48, 53],
+              note: 'Validação não retorna nada, mas pode lançar uma exceção'
+            },
+            {
+              loc: [65, 76],
+              note: 'E essa é a classe que consulta o serviço e decide se agenda ou não a publicação'
+            },
+            {
+              loc: [70, 72],
+              note: 'Também não precisa retornar nada, porque modifica a instância diretamente'
+            }
+          ]}
+        />
         <Slide bgColor="bgColor">
           <Heading size={3} caps>C#</Heading>
           <List>
             <ListItem>retorno de função + objetos</ListItem>
             <ListItem>mutação explícita por ponteiros</ListItem>
-            <ListItem>controle de erros por exceções</ListItem>
-          </List>
-        </Slide>
-        <Slide bgColor="bgColor">
-          <Heading size={3} caps>Elixir</Heading>
-          <List>
-            <ListItem>retorno de função + tuplas</ListItem>
-            <ListItem>destructuring + matching</ListItem>
-            <ListItem>imutabilidade</ListItem>
             <ListItem>controle de erros por exceções</ListItem>
           </List>
         </Slide>
