@@ -1,0 +1,50 @@
+package main
+
+import (
+  "fmt"
+  "os"
+  "time"
+)
+
+func main() {
+  content := os.Args[1]
+
+  m, err := valid(content)
+  if err != nil {
+    fmt.Println("Failed validation")
+    return
+  }
+
+  schedAt, err := pubOrSched(m)
+  if err != nil {
+    fmt.Println("Failed to publish or schedule")
+    return
+  }
+
+  if schedAt.IsZero() {
+    fmt.Println("Published:", url)
+  } else {
+    fmt.Println("Scheduled:", url, "@", schedAt.Format("02/Jan"))
+  }
+}
+
+type Model struct {
+  Content string
+  PublishedAt time.Time
+  Url string 
+}
+
+func (m Model) Slug() string {
+  return "slug"
+}
+
+func valid(content string) (Model, error) {
+  return Model{content}, nil
+}
+
+func pubOrSched(m Model) (time.Time, error) {
+  url := fmt.Sprintf("host/%s", model.Slug())
+  m.Url = url
+
+  return time.Now(), nil
+}

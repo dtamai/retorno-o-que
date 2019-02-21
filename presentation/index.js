@@ -250,13 +250,47 @@ export default class Presentation extends React.Component {
             <ListItem>controle de erros por exceções</ListItem>
           </List>
         </Slide>
+        <CodeSlide
+          lang="go"
+          code={require('raw-loader!./05_golang.example')}
+          ranges={[
+            {
+              loc: [8, 28],
+              title: 'Go',
+              note: 'Mas substituí tabs por espaços, pra caber'
+            },
+            {
+              loc: [11, 28],
+              note: 'O processo inteiro, é bem explícito o que acontece'
+            },
+            {
+              loc: [11, 16],
+              note: 'Validação e tratamento de erro'
+            },
+            {
+              loc: [17, 22],
+              note: 'Pubicar o texto e tratamento de erro'
+            },
+            {
+              loc: [23, 28],
+              note: 'Tratamento de agendamento. Go não gosta de nil'
+            },
+            {
+              loc: [40, 43],
+              note: 'A função de validação retornar uma dupla, com erro na direita'
+            },
+            {
+              loc: [44, 50],
+              note: 'A função de publicação modifica o model, e retorna uma dupla com erro na direita'
+            },
+          ]}
+        />
         <Slide bgColor="bgColor">
           <Heading size={3} caps>Go</Heading>
           <List>
             <ListItem>returno de função + tuplas</ListItem>
             <ListItem>não usar variáveis é um erro</ListItem>
-            <ListItem>mutabilidade</ListItem>
-            <ListItem>panic!</ListItem>
+            <ListItem>mutabilidade normal</ListItem>
           </List>
         </Slide>
         <Slide bgColor="bgColor">
