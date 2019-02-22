@@ -38,8 +38,8 @@ export default class Presentation extends React.Component {
   render() {
     return (
       <Deck
-        contentWidth={1400}
-        contentHeight={900}
+        contentWidth={1600}
+        contentHeight={1400}
         transition={['slide']}
         transitionDuration={500}
         theme={theme}
@@ -257,34 +257,73 @@ export default class Presentation extends React.Component {
           code={require('raw-loader!./05_golang.example')}
           ranges={[
             {
-              loc: [8, 28],
-              title: 'Go',
-              note: 'Mas substituí tabs por espaços, pra caber'
+              loc: [9, 29],
+              title: 'Go'
             },
             {
-              loc: [11, 28],
-              note: 'O processo inteiro, é bem explícito o que acontece'
+              loc: [9, 14],
+              note: 'Post com conteúdo obrigatório, URL e data de publicação opcionais'
             },
             {
-              loc: [11, 16],
-              note: 'Validação e tratamento de erro'
+              loc: [15, 18],
+              note: 'Slug'
             },
             {
-              loc: [17, 22],
-              note: 'Pubicar o texto e tratamento de erro'
+              loc: [19, 26],
+              note: 'Validação'
             },
             {
-              loc: [23, 28],
-              note: 'Tratamento de agendamento. Go não gosta de nil'
+              loc: [19, 20],
+              note: 'Retorno é uma tupla, pode ser um Post se der certo ou um erro'
             },
             {
-              loc: [40, 43],
-              note: 'A função de validação retornar uma dupla, com erro na direita'
+              loc: [21, 22],
+              note: 'Caso de erro'
             },
             {
-              loc: [44, 50],
-              note: 'A função de publicação modifica o model, e retorna uma dupla com erro na direita'
+              loc: [23, 24],
+              note: 'Caso de successo com a struct'
             },
+            {
+              loc: [27, 37],
+              note: 'Publicação'
+            },
+            {
+              loc: [27, 28],
+              note: 'Retorno também é uma tupla, de data de agendamento ou um erro'
+            },
+            {
+              loc: [32, 34],
+              note: 'Caso de sucesso da publicação'
+            },
+            {
+              loc: [35, 36],
+              note: 'Caso de sucesso do agendamento'
+            },
+            {
+              loc: [39, 60],
+              note: 'Orquestração de tudo'
+            },
+            {
+              loc: [42, 47],
+              note: 'Verificação se o método teve sucesso antes de usar o resultado'
+            },
+            {
+              loc: [48, 52],
+              note: 'Outra verificação'
+            },
+            {
+              loc: [54, 59],
+              note: 'Identificação se foi publicado ou agendado'
+            },
+            {
+              loc: [54, 55],
+              note: 'schedAt não pode ser nulo aqui, mas é uma verificação parecida'
+            },
+            {
+              loc: [55, 56],
+              note: 'url sempre vai ser uma string aqui, mas pode estar vazia'
+            }
           ]}
         />
         <Slide bgColor="bgColor">
@@ -329,7 +368,7 @@ export default class Presentation extends React.Component {
             },
             {
               loc: [31, 32],
-              note: 'Caso de successo com a strut'
+              note: 'Caso de successo com a struct'
             },
             {
               loc: [35, 46],
