@@ -38,6 +38,8 @@ export default class Presentation extends React.Component {
   render() {
     return (
       <Deck
+        contentWidth={1400}
+        contentHeight={900}
         transition={['slide']}
         transitionDuration={500}
         theme={theme}
@@ -293,13 +295,90 @@ export default class Presentation extends React.Component {
             <ListItem>mutabilidade normal</ListItem>
           </List>
         </Slide>
+        <CodeSlide
+          lang="rust"
+          code={require('raw-loader!./06_rust.example')}
+          ranges={[
+            {
+              loc: [2, 20],
+              title: 'Rust'
+            },
+            {
+              loc: [2, 7],
+              note: 'Post com conteúdo obrigatório, URL e data de publicação opcionais'
+            },
+            {
+              loc: [8, 21],
+              note: 'Construtor e slug'
+            },
+            {
+              loc: [22, 26],
+              note: 'Possíveis estados de um post depois do rascunho'
+            },
+            {
+              loc: [27, 34],
+              note: 'Validação'
+            },
+            {
+              loc: [27, 28],
+              note: 'Retorno é um Result, pode ser um Post se der certo ou uma mensagem de erro'
+            },
+            {
+              loc: [29, 30],
+              note: 'Caso de erro com a string'
+            },
+            {
+              loc: [31, 32],
+              note: 'Caso de successo com a strut'
+            },
+            {
+              loc: [35, 46],
+              note: 'Publicação'
+            },
+            {
+              loc: [35, 36],
+              note: 'Retorno também é um Result, de PostState ou mensagem de erro'
+            },
+            {
+              loc: [35, 36],
+              note: 'E pra modificar o post precisa da marcação mut'
+            },
+            {
+              loc: [41, 42],
+              note: 'Caso de sucesso da publicação'
+            },
+            {
+              loc: [43, 44],
+              note: 'Caso de sucesso do agendamento'
+            },
+            {
+              loc: [47, 62],
+              note: 'Orquestração de tudo'
+            },
+            {
+              loc: [49, 50],
+              note: 'Como o retorno é um Result dá pra usar a macro `?`'
+            },
+            {
+              loc: [50, 51],
+              note: 'Outra vez a macro'
+            },
+            {
+              loc: [52, 53],
+              note: 'URL é opcional, então tem que extrair o valor'
+            },
+            {
+              loc: [53, 57],
+              note: 'Como state é um enum tem que tratar todos os casos'
+            },
+          ]}
+        />
         <Slide bgColor="bgColor">
           <Heading size={3} caps>Rust</Heading>
           <List>
-            <ListItem>retorno de função + tipos</ListItem>
+            <ListItem>retorno de função + tipos + macros</ListItem>
             <ListItem>match não-exaustivo é um erro</ListItem>
             <ListItem>mutabilidade explícita</ListItem>
-            <ListItem>panic!</ListItem>
           </List>
         </Slide>
         <Slide bgColor="bgColor">

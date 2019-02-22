@@ -1,0 +1,64 @@
+use std::time::SystemTime;
+
+struct Post {
+    content: String,
+    url: Option<String>,
+    published_at: Option<SystemTime>,
+}
+
+impl Post {
+    fn draft(content: String) -> Post {
+        Post {
+            content,
+            url: None,
+            published_at: None,
+        }
+    }
+
+    fn slug(&self) -> String {
+        self.content.chars().take(5).collect()
+    }
+}
+
+enum PostState {
+    Scheduled(SystemTime),
+    Published,
+}
+
+fn validate(content: String) -> Result<Post, String> {
+    if content.is_empty() {
+        Err("content can't be empty".to_string())
+    } else {
+        Ok(Post::draft(content))
+    }
+}
+
+fn publish_or_schedule(post: &mut Post) -> Result<PostState, String> {
+    let url = format!("host/{}", post.slug());
+    post.url = Some(url);
+
+    if rust_magic() {
+        post.published_at = Some(SystemTime::now());
+        Ok(PostState::Published)
+    } else {
+        Ok(PostState::Scheduled(SystemTime::now()))
+    }
+}
+
+fn main() -> Result<(), String> {
+    let content = std::env::args().nth(1).unwrap();
+    let mut post = validate(content)?;
+    let state = publish_or_schedule(&mut post)?;
+
+    let url = post.url.unwrap();
+    match state {
+        PostState::Scheduled(time) => println!("Scheduled: {} @ {:?}", url, time),
+        PostState::Published => println!("Published: {}", url = url),
+    };
+
+    Ok(())
+}
+
+fn rust_magic() -> bool {
+    false
+}
