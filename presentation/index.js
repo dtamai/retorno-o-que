@@ -39,7 +39,7 @@ export default class Presentation extends React.Component {
     return (
       <Deck
         contentWidth={1600}
-        contentHeight={1400}
+        contentHeight={1600}
         transition={['slide']}
         transitionDuration={500}
         theme={theme}
@@ -152,40 +152,60 @@ export default class Presentation extends React.Component {
           code={require('raw-loader!./03_bash.example')}
           ranges={[
             {
-              loc: [2, 21],
-              title: 'Bash'
+              loc: [2, 13],
+              note: 'O método validate'
             },
             {
-              loc: [6, 9],
-              note: 'validate retorna um código e joga no stdout o resultado'
+              loc: [6, 8],
+              note: 'O caso de falha termina o processo com um código'
             },
             {
-              loc: [9, 12],
-              note: 'publish_or_distribute popula uma variável global'
+              loc: [9, 11],
+              note: 'O caso de sucesso também termina o processo com um código'
             },
             {
-              loc: [22, 35],
-              note: 'o método validate'
+              loc: [9, 10],
+              note: 'Mas produz uma saída específica também'
             },
             {
-              loc: [28, 30],
-              note: 'o caso de falha'
+              loc: [14, 23],
+              note: 'O método publish_or_schedule'
             },
             {
-              loc: [31, 33],
-              note: 'o caso de sucesso'
+              loc: [17, 18],
+              note: 'Não tem retorno, popula variáveis globais'
             },
             {
-              loc: [36, 44],
-              note: 'o método publish_or_schedule'
+              loc: [19, 21],
+              note: 'Não tem retorno, popula variáveis globais, talvez'
             },
             {
-              loc: [41, 43],
-              note: 'não tem retorno, popula variáveis globais'
+              loc: [24, 43],
+              note: 'Função que orquestra outras funções'
             },
             {
-              loc: [9, 16],
-              note: 'verificação se uma das variáveis tem algum valor'
+              loc: [27, 29],
+              note: 'Tentando contruir um post'
+            },
+            {
+              loc: [30, 31],
+              note: 'Precisa verificar a saída do último processo'
+            },
+            {
+              loc: [31, 32],
+              note: 'Se deu certo então a variável não é uma mensagem de erro e pode ser repassada'
+            },
+            {
+              loc: [33, 34],
+              note: 'Verificação de uma variável global'
+            },
+            {
+              loc: [34, 38],
+              note: 'Pra decidir o que aconteceu com o post'
+            },
+            {
+              loc: [39, 41],
+              note: 'E a validação pode ter falhado'
             },
           ]}
         />
@@ -203,44 +223,72 @@ export default class Presentation extends React.Component {
           code={require('raw-loader!./04_csharp.example')}
           ranges={[
             {
-              loc: [2, 20],
+              loc: [4, 26],
               title: 'C#'
             },
             {
-              loc: [4, 8],
-              note: 'O processo completo. Com classes dá pra encapsular melhor'
+              loc: [4, 22],
+              note: 'Uma classe normal'
             },
             {
-              loc: [16, 20],
-              note: 'Essa é a classe'
+              loc: [8, 10],
+              note: 'Getters e setters, ou attr_accessor'
             },
             {
-              loc: [21, 33],
-              note: 'E aqui é onde o processo realmente acontece'
+              loc: [11, 15],
+              note: 'Construtor que aceita o conteúdo'
             },
             {
-              loc: [23, 25],
-              note: 'Validação não tem retorno agora'
+              loc: [16, 21],
+              note: 'Validação se o conteúdo não está vazio'
             },
             {
-              loc: [28, 33],
-              note: 'E uma checagem de nulo pra descobrir se foi agendado'
+              loc: [16, 17],
+              note: 'Não retorna nada'
             },
             {
-              loc: [40, 47],
-              note: 'O model é bem simples'
+              loc: [19, 20],
+              note: 'Mas se inválido lança uma exceção'
             },
             {
-              loc: [48, 53],
-              note: 'Validação não retorna nada, mas pode lançar uma exceção'
+              loc: [33, 47],
+              note: 'Classe com a lógica se o post vai ser agendado'
             },
             {
-              loc: [65, 76],
-              note: 'E essa é a classe que consulta o serviço e decide se agenda ou não a publicação'
+              loc: [35, 36],
+              note: 'É void, então não retorna nada'
             },
             {
-              loc: [70, 72],
-              note: 'Também não precisa retornar nada, porque modifica a instância diretamente'
+              loc: [37, 38],
+              note: 'Apenas modifica a instância'
+            },
+            {
+              loc: [40, 41],
+              note: 'Apenas modifica a instância'
+            },
+            {
+              loc: [48, 68],
+              note: 'Uma classe de serviço pra orquestrar as outras classes'
+            },
+            {
+              loc: [57, 70],
+              note: 'Método com a lógica'
+            },
+            {
+              loc: [59, 60],
+              note: 'Construindo um Post'
+            },
+            {
+              loc: [60, 61],
+              note: 'Validação pode ter uma exceção, mas fica pra camada de cima, ou não'
+            },
+            {
+              loc: [62, 63],
+              note: 'Mutação do post pelo serviço de agendamento'
+            },
+            {
+              loc: [64, 65],
+              note: 'Precisa checar se não é nulo pra saber o que aconteceu'
             }
           ]}
         />
@@ -383,7 +431,7 @@ export default class Presentation extends React.Component {
               note: 'E pra modificar o post precisa da marcação mut'
             },
             {
-              loc: [41, 42],
+              loc: [40, 42],
               note: 'Caso de sucesso da publicação'
             },
             {
@@ -391,7 +439,7 @@ export default class Presentation extends React.Component {
               note: 'Caso de sucesso do agendamento'
             },
             {
-              loc: [47, 62],
+              loc: [47, 60],
               note: 'Orquestração de tudo'
             },
             {

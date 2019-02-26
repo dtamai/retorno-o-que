@@ -1,74 +1,79 @@
 using System;
 
-public class Program
-{
-  public static void Main()
-  {
-    new PostHandler(new Scheduler()).Execute("");
-  }
-}
-
 class ValidationException : Exception {}
 
-class PostHandler
+class Post
 {
-  Scheduler scheduler;
+    String content;
 
-  public PostHandler(Scheduler scheduler)
-  {
-    this.scheduler = scheduler;
-  }
+    public DateTime ScheduledAt { get; set; }
+    public String Url { get; set; }
 
-  public void Execute(String content)
-  {
-    var model = new Model(content);
-    model.Validate();
-
-    this.scheduler.PublishOrSchedule(model);
-
-    if (null != model.ScheduledAt) {
-      Console.WriteLine("Published: {0}", model.Url);
-    } else {
-      Console.WriteLine("Scheduled: {0) at {1:dd/MM}", model.Url, model.ScheduledAt);
+    public Post(String content)
+    {
+        this.content = content;
     }
-  }
-}
 
-class Model
-{
-  String content;
+    public void Validate()
+    {
+        if (String.IsNullOrEmpty(this.content)
+            throw new ValidationException();
+    }
 
-  public DateTime ScheduledAt { get; set; }
-  public String Url { get; set; }
+    public String GetSlug()
+    {
+        return this.content.Substring(0, 5);
+    }
 
-  public Model(String content)
-  {
-    this.content = content;
-  }
-
-  public void Validate()
-  {
-    if (!SomeMagic())
-      throw new ValidationException();
-  }
-
-  public bool SomeMagic()
-  {
-    return true;
-  }
-
-  public String GetSlug()
-  {
-    return "";
-  }
+    private bool CSharpMagic()
+    {
+        return true;
+    }
 }
 
 class Scheduler
 {
-  public void PublishOrSchedule(Model model)
-  {
-    // ...
-    model.ScheduledAt = new DateTime();
-    model.Url = String.Format("https://www.example.com/{0}", model.GetSlug());
-  }
+    public void PublishOrSchedule(Post post)
+    {
+        post.Url = String.Format("https://www.example.com/{0}", post.GetSlug());
+
+        if (CSharpMagic())
+            post.ScheduledAt = new DateTime();
+    }
+
+    private bool CSharpMagic() {
+        return false;
+    }
+}
+
+class PostHandler
+{
+    Scheduler scheduler;
+
+    public PostHandler(Scheduler scheduler)
+    {
+        this.scheduler = scheduler;
+    }
+
+    public void Execute(String content)
+    {
+        var post = new Post(content);
+        post.Validate();
+
+        this.scheduler.PublishOrSchedule(post);
+
+        if (null != post.ScheduledAt) {
+            Console.WriteLine("Published: {0}", post.Url);
+        } else {
+            Console.WriteLine("Scheduled: {0) at {1:dd/MM}", post.Url, post.ScheduledAt);
+        }
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        new PostHandler(new Scheduler()).Execute("");
+    }
 }

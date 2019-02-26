@@ -1,18 +1,40 @@
 #!/usr/bin/env bash
 
+function validate() {
+    content=$1
+
+    if [ -z "${content}" ]; then
+        echo "Some validation failed"
+        exit 1
+    else
+        echo "$(get_post ${content})"
+        exit 0
+    fi
+}
+
+function publish_or_schedule() {
+    post=$1
+
+    url="$(get_url ${post})"
+
+    if [ $shell_magic() ]; then
+        schedule_date="$(get_schedule ${post})"
+    fi
+}
+
 function post() {
     content=$1
 
-    local model
-    model="$(validate ${content})"
+    local post
+    post="$(validate ${content})"
 
     if [ $? -eq 0 ]; then
-        publish_or_schedule ${model}
+        publish_or_schedule ${post}
 
         if [ -z "${schedule_date}" ]; then
-            echo "Published now: ${model} - ${url}"
+            echo "Published now: ${post} - ${url}"
         else
-            echo "Scheduled: ${model} - ${url} @ ${schedule_date}"
+            echo "Scheduled: ${post} - ${url} @ ${schedule_date}"
         fi
     else
         echo "Failed validation"
@@ -20,30 +42,7 @@ function post() {
     fi
 }
 
-function validate() {
-    content=$1
-
-    # ...
-
-    if [ $(shell_magic) ]; then
-        echo "Some validation failed"
-        exit 1
-    else
-        echo "$(get_model ${content})"
-        exit 0
-    fi
-}
-
-function publish_or_schedule() {
-    model=$1
-
-    # ...
-
-    schedule_date="$(get_schedule ${model})"
-    url="$(get_url ${model})"
-}
-
-function get_model() {
+function get_post() {
     echo $1
 }
 
