@@ -464,6 +464,35 @@ export default class Presentation extends React.Component {
           </List>
         </Slide>
         <Slide bgColor="bgColor">
+          <Heading size={4}>Como faço para usar?</Heading>
+        </Slide>
+        <CodeSlide
+          lang="ruby"
+          code={require('raw-loader!./07_result.rb')}
+          ranges={[
+            {
+              loc: [0, 20],
+              title: 'Pseudo-code'
+            },
+            {
+              loc: [3, 24],
+              note: 'Caso de sucesso'
+            },
+            {
+              loc: [25, 45],
+              note: 'Caso de falha'
+            },
+            {
+              loc: [46, 53],
+              note: 'Funções de conveniência'
+            },
+            {
+              loc: [54, 60],
+              note: 'Uso simples'
+            }
+          ]}
+        />
+        <Slide bgColor="bgColor">
           <Heading size={4} caps>Option</Heading>
           <Text>É um tipo simples:</Text>
           <List>
