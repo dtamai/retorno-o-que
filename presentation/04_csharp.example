@@ -24,11 +24,6 @@ class Post
     {
         return this.content.Substring(0, 5);
     }
-
-    private bool CSharpMagic()
-    {
-        return true;
-    }
 }
 
 class Scheduler

@@ -9,7 +9,6 @@ import (
 
 type Post struct {
 	Content string
-	PublishedAt time.Time
 	Url string 
 }
 
@@ -30,7 +29,6 @@ func pubOrSched(p Post) (time.Time, error) {
 	p.Url = url
 
 	if go_magic() {
-		p.PublishedAt = time.Now()
 		return time.Time{}, nil
 	} else {
 		return time.Now(), nil

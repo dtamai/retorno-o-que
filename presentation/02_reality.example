@@ -1,16 +1,21 @@
-post(content) {
-  model = validate(content) || throw Error
+execute(content) {
+  post = validate(content) // throws ValidationError
 
   try {
-    published = publish_or_schedule(model)
-    if published == 1 {
-      return model.url
-    } else if published == 2 {
-      return new UrlAndDate(model.url, date)
+    published = publish_or_schedule(post)
+    if published == 1 { // 1: published
+      return post.url
+    } else if published == 2 { // 2: scheduled
+      return new UrlAndDate(post.url, date)
     } else {
       return false
     }
-  } catch {
-    return -1
+  } catch SchedulerUnavailable { // network is not reliable
+    return NULL
   }
 }
+
+
+
+
+

@@ -1,18 +1,13 @@
-use std::time::SystemTime;
+use std::fmt;
 
 struct Post {
     content: String,
     url: Option<String>,
-    published_at: Option<SystemTime>,
 }
 
 impl Post {
     fn draft(content: String) -> Post {
-        Post {
-            content,
-            url: None,
-            published_at: None,
-        }
+        Post { content, url: None }
     }
 
     fn slug(&self) -> String {
@@ -21,11 +16,11 @@ impl Post {
 }
 
 enum PostState {
-    Scheduled(SystemTime),
+    Scheduled(DateTime),
     Published,
 }
 
-fn validate(content: String) -> Result<Post, String> {
+fn validate(content: String) -> Result<Post, ErrorMsg> {
     if content.is_empty() {
         Err("content can't be empty".to_string())
     } else {
@@ -33,15 +28,14 @@ fn validate(content: String) -> Result<Post, String> {
     }
 }
 
-fn publish_or_schedule(post: &mut Post) -> Result<PostState, String> {
+fn publish_or_schedule(post: &mut Post) -> Result<PostState, ErrorMsg> {
     let url = format!("host/{}", post.slug());
     post.url = Some(url);
 
     if rust_magic() {
-        post.published_at = Some(SystemTime::now());
         Ok(PostState::Published)
     } else {
-        Ok(PostState::Scheduled(SystemTime::now()))
+        Ok(PostState::Scheduled(DateTime::tomorrow()))
     }
 }
 
@@ -52,7 +46,7 @@ fn main() -> Result<(), String> {
 
     let url = post.url.unwrap();
     match state {
-        PostState::Scheduled(time) => println!("Scheduled: {} @ {:?}", url, time),
+        PostState::Scheduled(time) => println!("Scheduled: {} @ {}", url, time),
         PostState::Published => println!("Published: {}", url = url),
     };
 
@@ -63,7 +57,18 @@ fn rust_magic() -> bool {
     false
 }
 
+type ErrorMsg = String;
 
+struct DateTime {}
 
+impl DateTime {
+    fn tomorrow() -> DateTime {
+        DateTime {}
+    }
+}
 
-
+impl fmt::Display for DateTime {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "the time")
+    }
+}

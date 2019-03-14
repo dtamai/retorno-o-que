@@ -1,5 +1,5 @@
-post(content) {
-  model = validate(content)
+execute(content) {
+  post = validate(content)
 
-  return publish_or_schedule(model)
+  return publish_or_schedule(post)
 }
