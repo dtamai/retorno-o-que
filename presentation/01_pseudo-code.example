@@ -1,5 +1,5 @@
 execute(content) {
   post = validate(content)
 
-  return publish_or_schedule(post)
+  return publish(post)
 }

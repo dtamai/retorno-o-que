@@ -2,12 +2,10 @@ execute(content) {
   post = validate(content) // throws ValidationError
 
   try {
-    published = publish_or_schedule(post)
+    published = publish(post)
     if published == 1 { // 1: published
       return post.url
-    } else if published == 2 { // 2: scheduled
-      return new UrlAndDate(post.url, date)
-    } else {
+    } else { // not published
       return false
     }
   } catch SchedulerUnavailable { // network is not reliable

@@ -63,7 +63,7 @@ export default class Presentation extends React.Component {
           <Appear>
             <List textColor="tertiary">
               <ListItem bold>conteúdo inválido &rarr; rejeição</ListItem>
-              <ListItem bold>limite diário &rarr; agendamento</ListItem>
+              <ListItem bold>serviço externo &rarr; erro de rede</ListItem>
             </List>
           </Appear>
         </Slide>
@@ -84,7 +84,7 @@ export default class Presentation extends React.Component {
             },
             {
               loc: [3, 4],
-              note: 'Publica (ou agenda)',
+              note: 'Publica',
             },
           ]}
         />
@@ -105,7 +105,7 @@ export default class Presentation extends React.Component {
             },
             {
               loc: [4, 5],
-              note: 'Publicar ou agendar retorna um código',
+              note: 'Publicar retorna um código',
             },
             {
               loc: [5, 7],
@@ -113,20 +113,12 @@ export default class Presentation extends React.Component {
             },
             {
               loc: [7, 9],
-              note: 'Também pode ser um objeto',
-            },
-            {
-              loc: [9, 11],
               note: 'Ou uma booleana',
             },
             {
-              loc: [12, 14],
+              loc: [10, 12],
               note: 'Ou nulo',
             },
-            {
-              loc: [8, 9],
-              note: 'Variável sorrateira',
-            }
           ]}
         />
         <Slide bgColor="bgColor">
