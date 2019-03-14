@@ -1,5 +1,3 @@
-use std::fmt;
-
 struct Post {
     content: String,
     url: Option<String>,
@@ -15,41 +13,31 @@ impl Post {
     }
 }
 
-enum PostState {
-    Scheduled(DateTime),
-    Published,
-}
-
 fn validate(content: String) -> Result<Post, ErrorMsg> {
     if content.is_empty() {
-        Err("content can't be empty".to_string())
+        Err("content can't be empty".into())
     } else {
         Ok(Post::draft(content))
     }
 }
 
-fn publish_or_schedule(post: &mut Post) -> Result<PostState, ErrorMsg> {
-    let url = format!("host/{}", post.slug());
-    post.url = Some(url);
-
+fn publish(post: &mut Post) -> Result<(), ErrorMsg> {
     if rust_magic() {
-        Ok(PostState::Published)
+        let url = format!("host/{}", post.slug());
+        post.url = Some(url);
+
+        Ok(())
     } else {
-        Ok(PostState::Scheduled(DateTime::tomorrow()))
+        Err("Failed to publish".into())
     }
 }
 
-fn main() -> Result<(), String> {
-    let content = std::env::args().nth(1).unwrap();
+fn main() -> Result<(), ErrorMsg> {
+    let content = "content".to_string();
     let mut post = validate(content)?;
-    let state = publish_or_schedule(&mut post)?;
+    publish(&mut post)?;
 
-    let url = post.url.unwrap();
-    match state {
-        PostState::Scheduled(time) => println!("Scheduled: {} @ {}", url, time),
-        PostState::Published => println!("Published: {}", url = url),
-    };
-
+    println!("Published: {}", post.url.unwrap());
     Ok(())
 }
 
@@ -59,16 +47,8 @@ fn rust_magic() -> bool {
 
 type ErrorMsg = String;
 
-struct DateTime {}
 
-impl DateTime {
-    fn tomorrow() -> DateTime {
-        DateTime {}
-    }
-}
 
-impl fmt::Display for DateTime {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "the time")
-    }
-}
+
+
+

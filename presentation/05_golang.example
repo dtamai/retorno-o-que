@@ -3,13 +3,11 @@ package main
 import (
 	"errors"
 	"fmt"
-	"os"
-	"time"
 )
 
 type Post struct {
 	Content string
-	Url string 
+	Url     string
 }
 
 func (p Post) Slug() string {
@@ -20,23 +18,23 @@ func valid(content string) (Post, error) {
 	if content == "" {
 		return Post{}, errors.New("content can't be empty")
 	} else {
-		return Post{content}, nil
+		return Post{content, ""}, nil
 	}
 }
 
-func pubOrSched(p Post) (time.Time, error) {
-	url := fmt.Sprintf("host/%s", post.Slug())
-	p.Url = url
+func pub(p *Post) error {
+	url := fmt.Sprintf("host/%s", p.Slug())
 
 	if go_magic() {
-		return time.Time{}, nil
+		p.Url = url
+		return nil
 	} else {
-		return time.Now(), nil
+		return errors.New("failed to publish")
 	}
 }
 
 func main() {
-	content := os.Args[1]
+	content := "content"
 
 	p, err := valid(content)
 	if err != nil {
@@ -44,22 +42,18 @@ func main() {
 		return
 	}
 
-	schedAt, err := pubOrSched(p)
+	err = pub(&p)
 	if err != nil {
-		fmt.Println("Failed to publish or schedule")
+		fmt.Println(err)
 		return
 	}
-
-	if schedAt.IsZero() {
-		fmt.Println("Published:", p.url)
-	} else {
-		fmt.Println("Scheduled:", p.url, "@", schedAt.Format("02/Jan"))
-	}
+	fmt.Printf("Published: %s", p.Url)
 }
 
 func go_magic() bool {
 	return false
 }
+
 
 
 

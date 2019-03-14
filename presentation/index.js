@@ -129,7 +129,6 @@ export default class Presentation extends React.Component {
           <List>
             <ListItem>código numérico de retorno</ListItem>
             <ListItem>variáveis globais</ListItem>
-            <ListItem>apenas texto</ListItem>
             <ListItem>pouco controle sobre erros</ListItem>
           </List>
         </Slide>
@@ -142,63 +141,82 @@ export default class Presentation extends React.Component {
               title: 'Bash'
             },
             {
-              loc: [2, 13],
+              loc: [2, 11],
               note: 'O método validate'
             },
             {
-              loc: [6, 8],
+              loc: [3, 4],
+              note: 'content é uma variável global'
+            },
+            {
+              loc: [3, 6],
               note: 'O caso de falha termina o processo com um código'
             },
             {
-              loc: [9, 11],
-              note: 'O caso de sucesso também termina o processo com um código'
+              loc: [6, 9],
+              note: 'O caso de sucesso retorna um código numérico - só inteiros são válidos'
             },
             {
-              loc: [9, 10],
+              loc: [7, 8],
               note: 'Mas produz uma saída específica também'
             },
             {
-              loc: [14, 23],
-              note: 'O método publish_or_schedule'
+              loc: [12, 22],
+              note: 'O método publish'
             },
             {
-              loc: [17, 18],
-              note: 'Não tem retorno, popula variáveis globais'
+              loc: [13, 17],
+              note: 'Parecido com validate, post é uma variável global, usa código e popula a saída'
             },
             {
-              loc: [19, 21],
-              note: 'Não tem retorno, popula variáveis globais, talvez'
-            },
-            {
-              loc: [24, 43],
+              loc: [23, 37],
               note: 'Função que orquestra outras funções'
             },
             {
-              loc: [27, 29],
-              note: 'Como validate termina o processo tem que rodar em sub-shell'
+              loc: [26, 27],
+              note: 'Como validate pode terminar o processo tem que rodar em sub-shell'
             },
             {
-              loc: [30, 31],
+              loc: [26, 27],
+              note: 'E também precisa capturar a saída pra não precisa definir uma nova variável global'
+            },
+            {
+              loc: [28, 29],
               note: 'E verificar a saída do último processo'
             },
             {
-              loc: [31, 32],
-              note: 'Se deu certo então a variável não é uma mensagem de erro e pode ser repassada'
+              loc: [29, 31],
+              note: 'Se deu certo então a variável pode ser usada - publish usa post'
             },
             {
-              loc: [31, 32],
-              note: 'publish_or_schedule popula variáveis globais então tem que rodar no mesmo processo'
+              loc: [32, 34],
+              note: 'Outra vez verificar código de saída pra usar a variável'
             },
             {
-              loc: [33, 34],
-              note: 'Verificação de uma variável global'
-            },
-            {
-              loc: [39, 41],
-              note: 'E a validação pode ter falhado'
+              loc: [34, 36],
+              note: 'Os else`s estão implícitos nas funções - e isso é ótimo pra introduzir bugs'
             },
           ]}
         />
+        <Slide bgColor="bgColor">
+          <Heading size={3} caps>Bash</Heading>
+          <List>
+            <ListItem>código numérico de retorno</ListItem>
+            <Appear>
+              <ListItem textColor="tertiary">&rarr; valores enigmáticos</ListItem>
+            </Appear>
+            <p/>
+            <ListItem>variáveis globais</ListItem>
+            <Appear>
+              <ListItem textColor="tertiary">&rarr; mais valores enigmáticos</ListItem>
+            </Appear>
+            <p/>
+            <ListItem>pouco controle sobre erros</ListItem>
+            <Appear>
+              <ListItem textColor="tertiary">&rarr; complicado ter controle local de erros e não usar variáves globais</ListItem>
+            </Appear>
+          </List>
+        </Slide>
         <Slide bgColor="bgColor">
           <Heading size={3} caps>C#</Heading>
           <List>
@@ -212,11 +230,11 @@ export default class Presentation extends React.Component {
           code={require('raw-loader!./04_csharp.example')}
           ranges={[
             {
-              loc: [4, 26],
+              loc: [5, 27],
               title: 'C#'
             },
             {
-              loc: [4, 22],
+              loc: [5, 27],
               note: 'Uma classe normal'
             },
             {
@@ -240,53 +258,64 @@ export default class Presentation extends React.Component {
               note: 'Mas se inválido lança uma exceção'
             },
             {
-              loc: [28, 42],
-              note: 'Classe com a lógica se o post vai ser agendado'
+              loc: [28, 40],
+              note: 'Classe com a lógica para publicar o post'
             },
             {
               loc: [30, 31],
               note: 'É void, então não retorna nada'
             },
             {
-              loc: [32, 33],
+              loc: [33, 34],
               note: 'Apenas modifica a instância'
             },
             {
-              loc: [35, 36],
-              note: 'Apenas modifica a instância'
+              loc: [37, 38],
+              note: 'Aqui poderia lançar uma outra exceção'
             },
             {
-              loc: [43, 63],
+              loc: [41, 60],
               note: 'Uma classe de serviço pra orquestrar as outras classes'
             },
             {
-              loc: [52, 65],
+              loc: [50, 59],
               note: 'Método com a lógica'
             },
             {
-              loc: [54, 56],
+              loc: [53, 54],
               note: 'Validação pode ter uma exceção, mas fica pra camada de cima, ou não'
             },
             {
-              loc: [57, 58],
+              loc: [55, 57],
               note: 'Mutação do post pelo serviço de agendamento'
             },
-            {
-              loc: [59, 60],
-              note: 'Precisa checar se não é nulo pra saber o que aconteceu'
-            },
-            {
-              loc: [59, 60],
-              note: 'Mas com método que retorna valor é mais fácil'
-            }
           ]}
         />
+        <Slide bgColor="bgColor">
+          <Heading size={3} caps>C#</Heading>
+          <List>
+            <ListItem>retorno de função + objetos</ListItem>
+            <Appear>
+              <ListItem textColor="tertiary">&rarr; mais flexibilidade pra passar dados</ListItem>
+            </Appear>
+            <p/>
+            <ListItem>mutação por ponteiros</ListItem>
+            <Appear>
+              <ListItem textColor="tertiary">&rarr; menos mágico que variáveis globais</ListItem>
+            </Appear>
+            <p/>
+            <ListItem>controle de erros por exceções</ListItem>
+            <Appear>
+              <ListItem textColor="tertiary">&rarr; mais controle local mas é enigmático</ListItem>
+            </Appear>
+          </List>
+        </Slide>
         <Slide bgColor="bgColor">
           <Heading size={3} caps>Go</Heading>
           <List>
             <ListItem>returno de função + tuplas</ListItem>
-            <ListItem>não usar variáveis é um erro</ListItem>
             <ListItem>mutação por ponteiros</ListItem>
+            <ListItem>não usar variáveis é um erro</ListItem>
           </List>
         </Slide>
         <CodeSlide
@@ -294,73 +323,88 @@ export default class Presentation extends React.Component {
           code={require('raw-loader!./05_golang.example')}
           ranges={[
             {
-              loc: [9, 29],
+              loc: [7, 27],
               title: 'Go'
             },
             {
-              loc: [9, 13],
+              loc: [7, 11],
               note: 'Post com conteúdo obrigatório, URL opcional'
             },
             {
-              loc: [18, 25],
-              note: 'Validação'
+              loc: [16, 23],
+              note: 'Validação é uma função que constrói um Post a partir do conteúdo'
             },
             {
-              loc: [18, 19],
+              loc: [16, 17],
               note: 'Retorno é uma tupla, pode ser um Post se der certo ou um erro'
             },
             {
-              loc: [20, 21],
+              loc: [18, 19],
               note: 'Caso de erro'
             },
             {
-              loc: [22, 23],
+              loc: [20, 21],
               note: 'Caso de successo com a struct'
             },
             {
-              loc: [26, 36],
+              loc: [24, 34],
               note: 'Publicação'
             },
             {
-              loc: [26, 27],
-              note: 'Retorno também é uma tupla, de data de agendamento ou um erro'
+              loc: [24, 25],
+              note: 'Recebe um ponteiro para um Post e possivelmente retorna um erro'
             },
             {
-              loc: [31, 32],
-              note: 'Caso de sucesso da publicação'
+              loc: [27, 30],
+              note: 'Caso de sucesso da publicação modifica o Post e retorna nada'
             },
             {
-              loc: [33, 34],
-              note: 'Caso de sucesso do agendamento'
+              loc: [30, 32],
+              note: 'Caso de erro retorna uma mensagem'
             },
             {
-              loc: [37, 58],
+              loc: [35, 52],
               note: 'Orquestração de tudo'
             },
             {
-              loc: [40, 45],
+              loc: [38, 43],
               note: 'Verificação se o método teve sucesso antes de usar o resultado'
             },
             {
-              loc: [46, 51],
-              note: 'Outra verificação'
+              loc: [39, 42],
+              note: 'Em caso de erro termina a execução'
             },
             {
-              loc: [52, 57],
-              note: 'Identificação se foi publicado ou agendado'
-            },
-            {
-              loc: [52, 53],
-              note: 'schedAt não pode ser nulo aqui, mas é uma verificação parecida'
+              loc: [44, 50],
+              note: 'Outra verificação antes de usar o resultado'
             },
           ]}
         />
         <Slide bgColor="bgColor">
+          <Heading size={3} caps>Go</Heading>
+          <List>
+            <ListItem>returno de função + tuplas</ListItem>
+            <Appear>
+              <ListItem textColor="tertiary">&rarr; mais de um valor semântico por retorno</ListItem>
+            </Appear>
+            <p/>
+            <ListItem>mutação por ponteiros</ListItem>
+            <Appear>
+              <ListItem textColor="tertiary">&rarr; mais explícito que objetos</ListItem>
+            </Appear>
+            <p/>
+            <ListItem>não usar variáveis é um erro</ListItem>
+            <Appear>
+              <ListItem textColor="tertiary">&rarr; erros de esquecimento são eliminados</ListItem>
+            </Appear>
+          </List>
+        </Slide>
+        <Slide bgColor="bgColor">
           <Heading size={3} caps>Rust</Heading>
           <List>
             <ListItem>retorno de função + tipos + macros</ListItem>
-            <ListItem>match não-exaustivo é um erro</ListItem>
             <ListItem>mutabilidade explícita</ListItem>
+            <ListItem>match não-exaustivo é um erro</ListItem>
           </List>
         </Slide>
         <CodeSlide
@@ -368,83 +412,90 @@ export default class Presentation extends React.Component {
           code={require('raw-loader!./06_rust.example')}
           ranges={[
             {
-              loc: [2, 20],
+              loc: [0, 20],
               title: 'Rust'
             },
             {
-              loc: [2, 6],
+              loc: [0, 4],
               note: 'Post com conteúdo obrigatório, URL opcional'
             },
             {
-              loc: [8, 11],
-              note: 'Construtor só pra não precisar passar todos atributos'
+              loc: [15, 22],
+              note: 'Validação é uma função que constrói um Post a partir do conteúdo'
             },
             {
-              loc: [15, 21],
-              note: 'Possíveis estados de um post depois do rascunho'
-            },
-            {
-              loc: [22, 29],
-              note: 'Validação'
-            },
-            {
-              loc: [22, 23],
+              loc: [15, 16],
               note: 'Retorno é um Result, pode ser um Post se der certo ou uma mensagem de erro'
             },
             {
-              loc: [24, 25],
+              loc: [16, 18],
               note: 'Caso de erro com a string'
             },
             {
-              loc: [26, 27],
+              loc: [18, 20],
               note: 'Caso de successo com a struct'
             },
             {
-              loc: [30, 40],
+              loc: [23, 33],
               note: 'Publicação'
             },
             {
-              loc: [30, 31],
-              note: 'Retorno também é um Result, de PostState ou mensagem de erro'
+              loc: [23, 24],
+              note: 'Retorno também é um Result, nada em caso de sucesso ou uma mensagem de erro'
             },
             {
-              loc: [30, 31],
+              loc: [23, 24],
               note: 'E pra modificar o post precisa da marcação mut'
             },
             {
-              loc: [32, 33],
-              note: 'URL é opcional, aqui indica que agora tem um valor'
-            },
-            {
-              loc: [35, 36],
+              loc: [24, 29],
               note: 'Caso de sucesso da publicação'
             },
             {
-              loc: [37, 38],
-              note: 'Caso de sucesso do agendamento'
+              loc: [25, 27],
+              note: 'URL é opcional, aqui indica que agora tem um valor'
             },
             {
-              loc: [41, 53],
+              loc: [29, 31],
+              note: 'Caso de falha'
+            },
+            {
+              loc: [34, 42],
               note: 'Orquestração de tudo'
             },
             {
-              loc: [43, 44],
+              loc: [36, 37],
               note: 'Como o retorno é um Result dá pra usar a macro `?`'
             },
             {
-              loc: [44, 45],
+              loc: [37, 38],
               note: 'Outra vez a macro'
             },
             {
-              loc: [46, 47],
+              loc: [39, 40],
               note: 'URL é opcional, então tem que extrair o valor'
-            },
-            {
-              loc: [47, 51],
-              note: 'state é um enum tem que tratar todos os casos'
             },
           ]}
         />
+        <Slide bgColor="bgColor">
+          <Heading size={3} caps>Rust</Heading>
+          <List>
+            <ListItem>retorno de função + tipos + macros</ListItem>
+            <Appear>
+              <ListItem textColor="tertiary">&rarr; estrutura dos tipo e macro pra ergonomia</ListItem>
+            </Appear>
+            <p/>
+            <ListItem>mutabilidade explícita</ListItem>
+            <Appear>
+              <ListItem textColor="tertiary">&rarr; mais explícito que objetos</ListItem>
+            </Appear>
+            <p/>
+            <ListItem>match não-exaustivo é um erro</ListItem>
+            <Appear>
+              <ListItem textColor="tertiary">&rarr; erros de esquecimento são eliminados</ListItem>
+            </Appear>
+          </List>
+        </Slide>
         <Slide bgColor="bgColor">
           <Heading size={3} caps>Result/Option</Heading>
           <Appear>
@@ -510,7 +561,8 @@ export default class Presentation extends React.Component {
           <Text>Tratar erros é chato, mas chato é legal</Text>
         </Slide>
         <Slide bgColor="bgColor">
-          <Text>Valores mágicos não são um bom meio de comunicação: null, 0, "" dependem do contexto</Text>
+          <Text>Valores mágicos não são um bom meio de comunicação</Text>
+          <Text>null, 0, "", false dependem do contexto</Text>
           <Text>Não precisa custar nada um retorno explícito</Text>
         </Slide>
         <Slide bgColor="bgColor">

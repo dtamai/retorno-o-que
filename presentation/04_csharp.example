@@ -1,12 +1,12 @@
 using System;
 
 class ValidationException : Exception {}
+class SchedulerExcepion : Exception {}
 
 class Post
 {
     String content;
 
-    public DateTime ScheduledAt { get; set; }
     public String Url { get; set; }
 
     public Post(String content)
@@ -28,16 +28,14 @@ class Post
 
 class Scheduler
 {
-    public void PublishOrSchedule(Post post)
+    public void Publish(Post post)
     {
-        post.Url = String.Format("https://www.example.com/{0}", post.GetSlug());
-
         if (CSharpMagic())
-            post.ScheduledAt = new DateTime();
+            post.Url = String.Format("https://www.example.com/{0}", post.GetSlug());
     }
 
     private bool CSharpMagic() {
-        return false;
+        return true; // throws SchedulerException
     }
 }
 
@@ -55,13 +53,8 @@ class PostHandler
         var post = new Post(content);
         post.Validate();
 
-        this.scheduler.PublishOrSchedule(post);
-
-        if (null != post.ScheduledAt) {
-            Console.WriteLine("Published: {0}", post.Url);
-        } else {
-            Console.WriteLine("Scheduled: {0) at {1:dd/MM}", post.Url, post.ScheduledAt);
-        }
+        this.scheduler.Publish(post);
+        Console.WriteLine("Published: {0}", post.Url);
     }
 }
 
@@ -69,6 +62,6 @@ public class Program
 {
     public static void Main()
     {
-        new PostHandler(new Scheduler()).Execute("");
+        new PostHandler(new Scheduler()).Execute("content");
     }
 }
