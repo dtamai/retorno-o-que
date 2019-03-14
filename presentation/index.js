@@ -510,12 +510,12 @@ export default class Presentation extends React.Component {
           <Text>Tratar erros é chato, mas chato é legal</Text>
         </Slide>
         <Slide bgColor="bgColor">
-          <Text>Código de retorno é uma ideia simples</Text>
-          <Text>Result/Option é uma implementação menos mágica dessa ideia</Text>
-        </Slide>
-        <Slide bgColor="bgColor">
           <Text>Valores mágicos não são um bom meio de comunicação: null, 0, "" dependem do contexto</Text>
           <Text>Não precisa custar nada um retorno explícito</Text>
+        </Slide>
+        <Slide bgColor="bgColor">
+          <Text>Código de retorno é uma ideia simples</Text>
+          <Text>Result/Option é uma implementação menos mágica dessa ideia</Text>
         </Slide>
         <Slide bgColor="bgColor">
           <Heading size={3}>Referências</Heading>
